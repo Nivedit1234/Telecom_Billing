@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -42,6 +44,22 @@ public class Plan extends BaseEntity {
     private double ratePerSMS;
 
     @OneToMany(mappedBy = "plan")
+    @JsonManagedReference
+    
+
     private List<Customer> customers = new ArrayList<>();
+    
+    @Override
+    public String toString() {
+        return "Plan{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", ratePerMinute=" + ratePerMinute +
+                ", ratePerGB=" + ratePerGB +
+                ", ratePerSMS=" + ratePerSMS +
+                '}';
+    }
+
 }
 

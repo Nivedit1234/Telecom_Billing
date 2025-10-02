@@ -3,6 +3,9 @@ package com.telecom.billing.telecom_billing.Models;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -40,12 +43,18 @@ public class Customer extends BaseEntity {
     private String phoneNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
+    
     @JoinColumn(name = "plan_id", nullable = false)
     private Plan plan;
 
     @OneToMany(mappedBy = "customer")
+    @JsonManagedReference
+    
+
     private List<Usage> usages = new ArrayList<>();
 
     @OneToMany(mappedBy = "customer")
+    @JsonManagedReference
     private List<Invoice> invoices = new ArrayList<>();
 }

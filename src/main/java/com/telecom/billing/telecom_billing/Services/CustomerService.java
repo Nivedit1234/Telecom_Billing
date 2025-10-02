@@ -20,12 +20,14 @@ public class CustomerService {
         this.planRepo = planRepo;
     }
 
-    public Customer registerCustomer(Customer customer, String planCode) {
-        Plan plan = planRepo.findByCode(planCode)
-                .orElseThrow(() -> new RuntimeException("Plan not found"));
+    public Customer registerCustomer(Customer customer, Long planId) {
+        Plan plan = planRepo.findById(planId)
+                .orElseThrow(() -> new RuntimeException("Plan not found with id: " + planId));
+        System.out.println(plan);
         customer.setPlan(plan);
         return customerRepo.save(customer);
     }
+
 
     public List<Customer> getAllCustomers() {
         return customerRepo.findAll();

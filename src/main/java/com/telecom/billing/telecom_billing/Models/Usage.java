@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Getter 
 @Setter
@@ -18,6 +20,8 @@ public class Usage extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", nullable = false)
+    @JsonBackReference
+
     private Customer customer;
 
     @Column(nullable = false)

@@ -15,16 +15,16 @@ public class PlanService {
         this.repo = repo;
     }
 
-    public Plan createPlan(Plan plan) {
-        return repo.save(plan);
-    }
+    
 
     public List<Plan> getAllPlans() {
         return repo.findAll();
     }
 
-    public Plan getPlanByCode(String code) {
-        return repo.findByCode(code)
-                .orElseThrow(() -> new RuntimeException("Plan not found: " + code));
-    }
+
+
+	public Plan getPlanById(int id) {
+		return repo.findById(id)
+				.orElseThrow(()->new RuntimeException("Plan not found "+ id));
+	}
 }

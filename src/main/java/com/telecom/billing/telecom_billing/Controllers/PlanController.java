@@ -18,13 +18,13 @@ public class PlanController {
     }
 
 
-    @GetMapping
+    @GetMapping("/getAllPlans")
     public List<Plan> getAllPlans() {
         return service.getAllPlans();
     }
 
-    @GetMapping("/{code}")
-    public Plan getPlan(@PathVariable String code) {
-        return service.getPlanByCode(code);
+    @GetMapping("/{id}")
+    public Plan getPlan(@PathVariable int id) {
+        return service.getPlanById(id);
     }
 }

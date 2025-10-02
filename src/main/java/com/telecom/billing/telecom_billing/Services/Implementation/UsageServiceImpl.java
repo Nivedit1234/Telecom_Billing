@@ -1,6 +1,6 @@
 package com.telecom.billing.telecom_billing.Services.Implementation;
 
-
+import java.util.Random;
 import com.telecom.billing.telecom_billing.Models.Customer;
 import com.telecom.billing.telecom_billing.Models.Usage;
 import com.telecom.billing.telecom_billing.Repository.CustomerRepository;
@@ -16,31 +16,48 @@ public class UsageServiceImpl implements UsageService {
 
     private final UsageRepository usageRepository;
     private final CustomerRepository customerRepository;
+    private final Random random;
 
     public UsageServiceImpl(UsageRepository usageRepository, CustomerRepository customerRepository) {
         this.usageRepository = usageRepository;
         this.customerRepository = customerRepository;
+        this.random=new Random();
     }
 
     @Override
-    public Usage generateRandomUsage(Long customerId) {
-        Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(() -> new RuntimeException("Customer not found"));
+    public void generateMonthlyUsageForAllCustomers(int days) {
+        customerRepository.findAll().forEach(customer -> {
+            for (int i = 0; i < days; i++) {
+                Usage usage = new Usage();
+                usage.setCustomer(customer);
 
-        Usage usage = new Usage();
-        usage.setCustomer(customer);
-        usage.setUsageDate(LocalDate.now());
+                // Usage for each past day
+                usage.setUsageDate(LocalDate.now().minusDays(i));
 
-        // Simulated random usage
-        usage.setMinutesUsed((int) (Math.random() * 200));  // up to 200 mins
-        usage.setMinutesUsed((int) (Math.random() * 50));       // up to 50 SMS
-        usage.setDataUsedGB((int) (Math.random() * 2048));  // up to 2GB
+                // Random realistic usage
+                usage.setMinutesUsed(random.nextInt(60)); // up to 1 hr/day
+                usage.setDataUsedGB(Math.round(random.nextDouble() * 2 * 100.0) / 100.0); // up to 2 GB/day
+                usage.setSmsSent(random.nextInt(20)); // up to 20 SMS/day
 
-        return usageRepository.save(usage);
+                usageRepository.save(usage);
+            }
+        });
     }
+
+
+
 
     @Override
     public List<Usage> getUsageForCustomer(Long customerId) {
         return usageRepository.findByCustomerId(customerId);
     }
+
+    @Override
+    public List<Usage> getUsageForCustomerBetween(Long customerId, LocalDate start, LocalDate end) {
+        return usageRepository.findByCustomerIdAndUsageDateBetween(customerId, start, end);
+    }
+
+
+	
+
 }
