@@ -11,3 +11,4 @@ public interface UsageService {
     List<Usage> getUsageForCustomer(Long customerId);
     List<Usage> getUsageForCustomerBetween(Long customerId, LocalDate start, LocalDate end);
 }
+  
