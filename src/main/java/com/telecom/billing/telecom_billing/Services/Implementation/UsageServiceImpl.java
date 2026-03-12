@@ -1,15 +1,15 @@
 package com.telecom.billing.telecom_billing.Services.Implementation;
-import com.telecom.billing.telecom_billing.exception.ResourceNotFoundException;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Random;
-import com.telecom.billing.telecom_billing.Models.Customer;
+
+import org.springframework.stereotype.Service;
+
 import com.telecom.billing.telecom_billing.Models.Usage;
 import com.telecom.billing.telecom_billing.Repository.CustomerRepository;
 import com.telecom.billing.telecom_billing.Repository.UsageRepository;
 import com.telecom.billing.telecom_billing.Services.UsageService;
-import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.util.List;
+import com.telecom.billing.telecom_billing.exception.ResourceNotFoundException;
 
 
 

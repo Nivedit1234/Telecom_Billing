@@ -1,21 +1,27 @@
 package com.telecom.billing.telecom_billing.Controllers;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.telecom.billing.telecom_billing.Models.Customer;
 import com.telecom.billing.telecom_billing.Models.User;
 import com.telecom.billing.telecom_billing.Repository.CustomerRepository;
 import com.telecom.billing.telecom_billing.Repository.UserRepository;
 import com.telecom.billing.telecom_billing.exception.ConflictException;
 import com.telecom.billing.telecom_billing.exception.NotFoundException;
-import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import jakarta.validation.Valid;
 
 /**
  * Controller for customer-related endpoints.

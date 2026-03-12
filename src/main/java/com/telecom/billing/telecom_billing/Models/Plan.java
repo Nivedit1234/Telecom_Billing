@@ -1,9 +1,11 @@
 package com.telecom.billing.telecom_billing.Models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
@@ -56,7 +58,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor 
 @AllArgsConstructor
-public class Plan extends BaseEntity {
+public class Plan extends BaseEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -77,6 +79,7 @@ public class Plan extends BaseEntity {
     @Column(nullable = false)
     private double ratePerSMS;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "plan")
     @JsonManagedReference
     

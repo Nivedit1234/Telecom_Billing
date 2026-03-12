@@ -1,5 +1,5 @@
 package com.telecom.billing.telecom_billing.Controllers;
-import java.util.Set;
+/*import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
@@ -10,6 +10,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.telecom.billing.telecom_billing.Models.Customer;
+//import com.telecom.billing.telecom_billing.Models.User;
+
+
+import com.telecom.billing.telecom_billing.Repository.CustomerRepository;
+import com.telecom.billing.telecom_billing.Repository.UserRepository;
+import com.telecom.billing.telecom_billing.Services.AuthService;
+import com.telecom.billing.telecom_billing.security.JwtService;
+
+import jakarta.validation.Valid;
+*/
+
+
+import com.telecom.billing.telecom_billing.Models.Customer;
+import com.telecom.billing.telecom_billing.Models.Role;
 import com.telecom.billing.telecom_billing.Models.User;
 import com.telecom.billing.telecom_billing.Repository.CustomerRepository;
 import com.telecom.billing.telecom_billing.Repository.UserRepository;
@@ -17,6 +31,13 @@ import com.telecom.billing.telecom_billing.Services.AuthService;
 import com.telecom.billing.telecom_billing.security.JwtService;
 
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
+import java.util.stream.Collectors;
+
 
 @RestController
 @RequestMapping("/auth")   // All endpoints begin with /auth
@@ -61,6 +82,7 @@ public class AuthController {
      User user = null;
 
      if (customer != null) {
+    	 
          // If a customer exists, use its linked User
          user = customer.getUser();
          if (user == null) {
@@ -102,15 +124,16 @@ public class AuthController {
     // -------------------------------------------------------
     // REGISTER ENDPOINT
     // -------------------------------------------------------
- @PostMapping("/register")
- public ResponseEntity<?> register(@RequestBody @Valid RegisterRequest req) {
+ @PostMapping("/register/{planId}")
+ public ResponseEntity<?> register(
+         @PathVariable Long planId,
+         @RequestBody @Valid RegisterRequest req) {
 
-     AuthService.RegisterResult res = authService.register(req);
+     AuthService.RegisterResult res = authService.register(req, planId);
 
      String token = jwtService.generateToken(res.username(), res.roles());
 
      return ResponseEntity.ok(new LoginResponse(token, res.username(), res.roles()));
  }
-
 
 }

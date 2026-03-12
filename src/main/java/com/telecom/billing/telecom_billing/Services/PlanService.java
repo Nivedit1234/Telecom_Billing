@@ -96,7 +96,8 @@ public class PlanService {
      */
     @Cacheable("plans")
     public List<Plan> getAllPlans() {
-        return repo.findAll();
+        System.out.println("DB HIT");
+    	return repo.findAll();
     }
 
     /**

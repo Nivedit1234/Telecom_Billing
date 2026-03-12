@@ -55,7 +55,7 @@ public class SecurityConfig {
 
             // Define which URLs need authentication
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/login", "/auth/register")
+                .requestMatchers("/auth/**","/plans/**")
                 .permitAll()                           // These endpoints are public
                 .anyRequest().authenticated()          // Everything else requires a valid JWT
             )

@@ -25,7 +25,7 @@ public class AdminController {
      * Create a user and customer if missing and link them.
      * Protected by ROLE_ADMIN.
      */
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create-user")
     public ResponseEntity<?> createUserForCustomer(@RequestBody CreateUserForCustomerDto dto) {
         try {

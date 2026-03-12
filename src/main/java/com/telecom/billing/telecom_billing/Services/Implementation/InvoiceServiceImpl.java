@@ -1,19 +1,19 @@
 package com.telecom.billing.telecom_billing.Services.Implementation;
-import com.telecom.billing.telecom_billing.exception.ResourceNotFoundException;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.telecom.billing.telecom_billing.Models.Customer;
 import com.telecom.billing.telecom_billing.Models.Invoice;
 import com.telecom.billing.telecom_billing.Models.Plan;
 import com.telecom.billing.telecom_billing.Models.Usage;
 import com.telecom.billing.telecom_billing.Repository.CustomerRepository;
 import com.telecom.billing.telecom_billing.Repository.InvoiceRepository;
-import com.telecom.billing.telecom_billing.Repository.UsageRepository;
 import com.telecom.billing.telecom_billing.Services.InvoiceService;
 import com.telecom.billing.telecom_billing.Services.UsageService;
-import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.time.YearMonth;
-import java.util.List;
+import com.telecom.billing.telecom_billing.exception.ResourceNotFoundException;
 
 
 
@@ -124,4 +124,3 @@ public class InvoiceServiceImpl implements InvoiceService {
         return invoiceRepository.findByCustomerId(customerId);
     }
 }
-

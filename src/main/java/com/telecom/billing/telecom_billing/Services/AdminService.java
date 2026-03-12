@@ -1,5 +1,12 @@
 package com.telecom.billing.telecom_billing.Services;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.telecom.billing.telecom_billing.Controllers.CreateUserForCustomerDto;
 import com.telecom.billing.telecom_billing.Models.Customer;
 import com.telecom.billing.telecom_billing.Models.Role;
@@ -7,12 +14,6 @@ import com.telecom.billing.telecom_billing.Models.User;
 import com.telecom.billing.telecom_billing.Repository.CustomerRepository;
 import com.telecom.billing.telecom_billing.Repository.UserRepository;
 import com.telecom.billing.telecom_billing.exception.ConflictException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * AdminService - handles admin-only tasks such as creating user+customer and linking them.

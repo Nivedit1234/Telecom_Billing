@@ -1,13 +1,14 @@
 package com.telecom.billing.telecom_billing.security.config;
 
 
-import com.telecom.billing.telecom_billing.Models.Role;
-import com.telecom.billing.telecom_billing.Models.User;
-import com.telecom.billing.telecom_billing.Repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import com.telecom.billing.telecom_billing.Models.Role;
+import com.telecom.billing.telecom_billing.Models.User;
+import com.telecom.billing.telecom_billing.Repository.UserRepository;
 
 @Configuration
 public class AdminSeeder {
