@@ -6,29 +6,80 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController // Marks this class as a REST controller that returns JSON responses
-@RequestMapping("/plans") // All APIs inside this controller start with /plans
+/**
+ * PlanController - Exposes REST APIs related to telecom plans.
+ *
+ * Responsibilities:
+ * 1. Allow clients to retrieve all available telecom plans.
+ * 2. Allow clients to retrieve a specific plan using its ID.
+ *
+ * Annotations:
+ *  @RestController
+ *      - Marks this class as a REST controller.
+ *      - Automatically converts returned objects to JSON.
+ *
+ *  @RequestMapping("/plans")
+ *      - Defines the base URL for all endpoints in this controller.
+ *      - All APIs inside this class will start with /plans.
+ *
+ * Constructor Injection:
+ *  - Injects PlanService using constructor injection (best practice).
+ *  - Promotes immutability and easier unit testing.
+ *
+ * Methods:
+ *  getAllPlans()
+ *      - Returns a list of all available telecom plans.
+ *      - Internally calls PlanService.getAllPlans().
+ *
+ *  getPlan(Long id)
+ *      - Retrieves a specific plan using its unique ID.
+ *      - Delegates the logic to PlanService.getPlanById(id).
+ *      - If the plan does not exist, ResourceNotFoundException is thrown.
+ *
+ * Purpose:
+ *  - Acts as the API layer between clients and the business logic layer.
+ *  - Delegates business operations to PlanService.
+ *  - Keeps controllers thin and focused on request/response handling.
+ */
+
+@RestController
+@RequestMapping("/plans")
 public class PlanController {
 
-    // Service layer dependency for plan-related operations
+    /**
+     * Service layer dependency for plan-related operations.
+     * All business logic is handled in PlanService.
+     */
     private final PlanService service;
 
-    // Constructor-based dependency injection (recommended in Spring)
+    /**
+     * Constructor-based dependency injection.
+     *
+     * Spring automatically injects the PlanService bean here.
+     */
     public PlanController(PlanService service) {
         this.service = service;
     }
 
     /**
      * ---------------------------------------------------------
-     * GET /plans/getAllPlans
+     * GET /plans
      * ---------------------------------------------------------
      * Fetch and return all available telecom plans.
      *
-     * Uses PlanService.getAllPlans()
-     * This method does NOT need exception handling inside controller,
-     * because empty list is a valid response.
+     * Example Request:
+     *      GET /plans
+     *
+     * Example Response:
+     *      [
+     *          { "id":1, "name":"Basic Plan", "price":199 },
+     *          { "id":2, "name":"Unlimited Plan", "price":499 }
+     *      ]
+     *
+     * Returns:
+     *      List of all telecom plans.
      */
-    @GetMapping("/getAllPlans")
+    @GetMapping
     public List<Plan> getAllPlans() {
         return service.getAllPlans();
     }
@@ -37,16 +88,27 @@ public class PlanController {
      * ---------------------------------------------------------
      * GET /plans/{id}
      * ---------------------------------------------------------
-     * Fetch a single plan by its ID.
+     * Fetch a telecom plan using its ID.
      *
-     * Example request:
-     *   GET /plans/1
+     * Example Request:
+     *      GET /plans/1
      *
-     * Any errors (like Plan not found) are thrown by service layer
-     * as ResourceNotFoundException → caught by GlobalExceptionHandler.
+     * Example Response:
+     *      { "id":1, "name":"Basic Plan", "price":199 }
+     *
+     * Error Handling:
+     *      If the plan does not exist,
+     *      ResourceNotFoundException is thrown in the service layer
+     *      and handled by the GlobalExceptionHandler.
+     *
+     * Parameters:
+     *      id → Unique identifier of the telecom plan.
+     *
+     * Returns:
+     *      Plan object corresponding to the provided ID.
      */
     @GetMapping("/{id}")
-    public Plan getPlan(@PathVariable int id) {
-        return service.getPlanById(id); // Exceptions handled globally
+    public Plan getPlan(@PathVariable Long id) {
+        return service.getPlanById(id);
     }
 }
