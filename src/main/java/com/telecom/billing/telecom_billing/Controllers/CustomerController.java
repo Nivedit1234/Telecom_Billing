@@ -18,6 +18,7 @@ import com.telecom.billing.telecom_billing.Models.Customer;
 import com.telecom.billing.telecom_billing.Models.User;
 import com.telecom.billing.telecom_billing.Repository.CustomerRepository;
 import com.telecom.billing.telecom_billing.Repository.UserRepository;
+import com.telecom.billing.telecom_billing.Services.CustomerService;
 import com.telecom.billing.telecom_billing.exception.ConflictException;
 import com.telecom.billing.telecom_billing.exception.NotFoundException;
 
@@ -34,12 +35,14 @@ import jakarta.validation.Valid;
 @RequestMapping("/customers")
 public class CustomerController {
 
-    private final CustomerRepository customerRepo;
+	private final CustomerService customerService;
+	private final CustomerRepository customerRepo;
     private final UserRepository userRepo;
 
-    public CustomerController(CustomerRepository customerRepo, UserRepository userRepo) {
-        this.customerRepo = customerRepo;
+    public CustomerController(CustomerService customerService, UserRepository userRepo,CustomerRepository customerRepo) {
+        this.customerService= customerService;
         this.userRepo = userRepo;
+        this.customerRepo=customerRepo;
     }
 
     // ---------------------------
@@ -49,7 +52,7 @@ public class CustomerController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/getAll")
     public List<Customer> getAllCustomers() {
-        return customerRepo.findAll();
+        return customerService.getAllCustomers();   // ✅ goes through cache
     }
 
     // ---------------------------
